@@ -6,10 +6,11 @@
 FROM alpine:3.12
 
 RUN apk update && apk upgrade
-RUN apk add nginx openssl
+RUN apk add nginx openssl vim
 
 RUN mkdir /etc/nginx/ssl
-RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out /etc/nginx/ssl/private.pem -keyout /etc/nginx/ssl/public.key -subj "/C=RU/ST=Moscow/L=Moscow/O=21 school/OU=Mmonte/CN=othercrt"
+# RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out /etc/nginx/ssl/private.pem -keyout /etc/nginx/ssl/private.key -subj "/C=RU/ST=Moscow/L=Moscow/O=21 school/OU=Mmonte/CN=othercrt"
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/nginx/ssl/private.key -out /etc/nginx/ssl/sertificate.crt -subj "/C=RU/ST=Moscow/L=Moscow/O=21 school/OU=Mmonte/CN=othercrt"
 
 # COPY /srcs/nginx.conf /etc/nginx/sites-available/nginx.conf
 COPY /srcs/nginx.conf /etc/nginx/conf.d/default.conf
@@ -19,20 +20,23 @@ COPY /srcs/nginx.conf /etc/nginx/conf.d/default.conf
 # /etc/nginx/conf.d
 # RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled/nginx.conf
 
-RUN adduser -D -g 'www' www
-RUN mkdir /www
-RUN chown -R www:www /var/lib/nginx
-RUN chown -R www:www /www
+# RUN adduser -D -g 'www' www
+# RUN mkdir /www
+# RUN chown -R www:www /var/lib/nginx
+# RUN chown -R www:www /www
 # RUN chown -R www-data:www-data /var/www/*
 # RUN chmod -R 755 /var/www/
 
 # chown -R www-data:www-data /var/www/
+RUN mkdir -p /run/nginx
 
 EXPOSE 80 443
 
-COPY /srcs/start.sh ./
-RUN chmod 777 /start.sh
-CMD ["/start.sh"]
+# COPY /srcs/start.sh ./
+# RUN chmod 777 /start.sh
+CMD ["nginx", "-g", "daemon off;"]
+# CMD ["/start.sh"]
+# CMD ["nginx -g 'daemon off;'"]
 # CMD bash start.sh
 # CMD ["nginx", "-g", "daemon off;"]
 
