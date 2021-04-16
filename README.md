@@ -19,3 +19,5 @@ kubectl delete pods
 Вывести логи
 kubectl logs nginx
 kubectl describe pods nginx
+
+kubectl exec deploy/nginx-deployment -- pkill sshd
