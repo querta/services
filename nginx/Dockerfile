@@ -8,16 +8,29 @@ FROM alpine:3.12
 RUN apk update && apk upgrade
 RUN apk add nginx openssl openssh supervisor vim
 
+# RUN echo "root:root" | chpasswd
+# RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+# RUN RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+# RUN addgroup -g 1000 Docker
+# RUN echo "12345" | adduser mmone
+RUN adduser -D mmonte
+RUN echo mmonte:12345 | chpasswd
+
+
 RUN mkdir /etc/nginx/ssl
 # RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out /etc/nginx/ssl/private.pem -keyout /etc/nginx/ssl/private.key -subj "/C=RU/ST=Moscow/L=Moscow/O=21 school/OU=Mmonte/CN=othercrt"
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/nginx/ssl/private.key -out /etc/nginx/ssl/sertificate.crt -subj "/C=RU/ST=Moscow/L=Moscow/O=21 school/OU=Mmonte/CN=othercrt"
 
 # COPY /srcs/nginx.conf /etc/nginx/sites-available/nginx.conf
+RUN ssh-keygen -A
+
 COPY /srcs/nginx.conf /etc/nginx/conf.d/default.conf
+COPY /srcs/supervisord.conf /etc/supervisord.conf
+# COPY /srcs/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # /usr/sbin/sshd -D
 # ssh-keygen -A
 
-# etc/supervisord.conf
+# /etc/supervisord.conf
 # usr/sbin/sshd -D
 
 # COPY /srcs/nginx.conf /etc/nginx/conf.d/mynginx.conf
@@ -36,13 +49,15 @@ COPY /srcs/nginx.conf /etc/nginx/conf.d/default.conf
 # chown -R www-data:www-data /var/www/
 RUN mkdir -p /run/nginx
 
-EXPOSE 80 443 
+EXPOSE 80 443 22
 
 # COPY /srcs/start.sh ./
 # RUN chmod 777 /start.sh
 # RUN ssh-keygen -A
 # CMD [""]
-CMD ["nginx", "-g", "daemon off;"]
+# CMD ["nginx", "-g", "daemon off;"]
+# CMD ["/usr/bin/supervisord"]
+CMD ["supervisord"]
 # CMD ["/start.sh"]
 # CMD ["nginx -g 'daemon off;'"]
 # CMD bash start.sh
