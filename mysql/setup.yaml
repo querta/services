@@ -4,30 +4,32 @@ metadata:
   name: mysql-svc
   annotations:
     metallb.universe.tf/allow-shared-ip: metal-ip
-  labels:
-    app: mysql
 spec:
   ports:
     - port: 3306
   selector:
     app: mysql
-  clusterIP: None
+  type: clusterIP
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-pv
+  name: mysql
 spec:
-  storageClassName: ""
-  claimRef:
-    name: mysql-pv-claim---
+  storageClassName: manual
+  capacity:
+    storage: 500Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/mysql
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-pv-claim
-  labels:
-    app: mysql
+  name: mysql-pvc
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
