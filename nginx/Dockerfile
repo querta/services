@@ -18,7 +18,6 @@ RUN echo mmonte:12345 | chpasswd
 
 
 RUN mkdir /etc/nginx/ssl
-# RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out /etc/nginx/ssl/private.pem -keyout /etc/nginx/ssl/private.key -subj "/C=RU/ST=Moscow/L=Moscow/O=21 school/OU=Mmonte/CN=othercrt"
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/nginx/ssl/private.key -out /etc/nginx/ssl/sertificate.crt -subj "/C=RU/ST=Moscow/L=Moscow/O=21 school/OU=Mmonte/CN=othercrt"
 
 # COPY /srcs/nginx.conf /etc/nginx/sites-available/nginx.conf

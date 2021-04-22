@@ -2,32 +2,52 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-svc
-  annotations:
-    metallb.universe.tf/allow-shared-ip: metal-ip
+  labels:
+    app: mysql
 spec:
-  ports:
-    - port: 3306
   selector:
     app: mysql
-  type: clusterIP
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mysql
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 500Mi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /data/mysql
+  type: ClusterIP
+  ports:
+    - name: port-mysql
+      protocol: TCP
+      port: 3306
+      targetPort: 3306
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: mysql-svc
+#   # annotations:
+#   #   metallb.universe.tf/allow-shared-ip: metal-ip
+# spec:
+#   ports:
+#     - name: mysql-ports
+#       protocol: TCP
+#       port: 3306
+#       targetPort: 3306
+#   selector:
+#     app: mysql
+#   type: ClusterIP
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: mysql
+# spec:
+#   storageClassName: manual
+#   capacity:
+#     storage: 500Mi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: /data/mysql
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
+  labels:
+    app: mysql
 spec:
   storageClassName: manual
   accessModes:
@@ -40,30 +60,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql-deploy
+  labels:
+    app: mysql
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: mysql
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
         app: mysql
     spec:
       containers:
-      - image: sql_image
+      - image: mysql_image
         imagePullPolicy: Never
         name: mysql
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: password
-        - name: MYSQL_DATABASE
-          value: wordpress
-        - name: MYSQL_USER
-          value: root
-        - name: MYSQL_PASSWORD
-          value: password
         ports:
         - containerPort: 3306
           name: mysql
@@ -73,4 +85,5 @@ spec:
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
+          claimName: mysql-pvc
+

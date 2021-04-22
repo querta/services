@@ -11,5 +11,8 @@ kubectl apply -f metalconfig.yaml
 docker build -t nginx_image ./nginx/
 kubectl apply -f ./nginx/setup.yaml
 
-docker build -t sql_image ./mysql/
+docker build -t mysql_image ./mysql/
 kubectl apply -f ./mysql/setup.yaml
+
+docker build -t wordpress_image ./wordpress/
+kubectl apply -f ./wordpress/setup.yaml
