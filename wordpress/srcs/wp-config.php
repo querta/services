@@ -29,7 +29,7 @@ define( 'DB_USER', 'mmonte' );
 define( 'DB_PASSWORD', 'password' );
 
 /** Имя сервера MySQL */
-define( 'DB_HOST', 'mysql' );
+define( 'DB_HOST', 'mysql-svc' );
 
 /** Кодировка базы данных для создания таблиц. */
 define( 'DB_CHARSET', 'utf8' );

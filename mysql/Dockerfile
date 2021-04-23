@@ -9,6 +9,8 @@ RUN apk update && apk upgrade
 RUN apk add mariadb mariadb-client supervisor openrc
 # RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/community --allow-untrusted --no-cache
 RUN mkdir -p /run/mysql
+COPY srcs/default.sql ./default.sql
+# COPY srcs/wordpress.sql ./wordpress.sql
 
 
 COPY /srcs/my.cnf /etc/my.cnf.d/my.cnf

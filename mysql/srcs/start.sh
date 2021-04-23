@@ -1,18 +1,39 @@
 #! /bin/sh
 
+# rc-status
+# touch /run/openrc/softlevel
 openrc default
-rc-service mariadb setup
-# mariadb-install-db -u root
-# mysql -u root & sleep 5
-rc-service mariadb start
-mysql -u -root --execute="CREATE DATABASE wordpress;"
-# mysql -u root wordpress < wordpress.sql_image
-mysql -u root --execute="CREATE USER 'mmonte'@'%' IDENTIFIED BY  'password'; GRANT ALL PRIVILEGES ON *.* TO 'mmonte'@'%' WITH GRANT OPTION; USE wordpress; FLUSH PRIVILEGES;" 
-# CREATE DATABASE wordpress;
-# CREATE USER 'user'@'%' IDENTIFIED BY 'pass';
-# GRANT ALL PRIVILEGES ON wordpress.* TO 'user'@'%';
-# FLUSH PRIVILEGES;
-/usr/bin/supervisord -c /etc/supervisord.conf
+
+/etc/init.d/mariadb setup
+/etc/init.d/mariadb start
+
+mysql -u root mysql < ./default.sql
+# mysql -u -root --execute="CREATE DATABASE wordpress;"
+# mysql -u root --execute="CREATE USER 'mmonte'@'%' IDENTIFIED BY  'password'; GRANT ALL PRIVILEGES ON *.* TO 'mmonte'@'%' WITH GRANT OPTION; USE wordpress; FLUSH PRIVILEGES;" 
+
+# mysql -u root wordpress < ./wordpress.sql
+
+
+usr/bin/supervisord -c /etc/supervisord.conf
+
+# echo password  > mysqldump -u root -p wordpress  > wordpress.sql
+# kubectl exec deploy/mysql-deploy -- echo password  > mysqldump -u root -p wordpress  > wordpress.sql
+# kubectl cp deploy/mysql-deploy:./wordpress.sql /
+# kubectl cp pods/mysql-deploy-f685fddb8-zhvgh:./wordpress.sql /
+
+# openrc default
+# rc-service mariadb setup
+# # mariadb-install-db -u root
+# # mysql -u root & sleep 5
+# rc-service mariadb start
+# mysql -u -root --execute="CREATE DATABASE wordpress;"
+# # mysql -u root wordpress < wordpress.sql_image
+# mysql -u root --execute="CREATE USER 'mmonte'@'%' IDENTIFIED BY  'password'; GRANT ALL PRIVILEGES ON *.* TO 'mmonte'@'%' WITH GRANT OPTION; USE wordpress; FLUSH PRIVILEGES;" 
+# # CREATE DATABASE wordpress;
+# # CREATE USER 'user'@'%' IDENTIFIED BY 'pass';
+# # GRANT ALL PRIVILEGES ON wordpress.* TO 'user'@'%';
+# # FLUSH PRIVILEGES;
+# /usr/bin/supervisord -c /etc/supervisord.conf
 # mysql_install_db -u root
 
 # /usr/bin/mysqld -u root &

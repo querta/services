@@ -20,4 +20,4 @@ kubectl delete pods
 kubectl logs nginx
 kubectl describe pods nginx
 
-kubectl exec deploy/nginx-deployment -- pkill sshd
+kubectl exec deploy/nginx-deploy -- pkill sshd
