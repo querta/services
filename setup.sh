@@ -16,3 +16,6 @@ kubectl apply -f ./mysql/setup.yaml
 
 docker build -t wordpress_image ./wordpress/
 kubectl apply -f ./wordpress/setup.yaml
+
+docker build -t pma_image ./pma/
+kubectl apply -f ./pma/setup.yaml
