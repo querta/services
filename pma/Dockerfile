@@ -1,39 +1,39 @@
 FROM alpine:3.12
 
 RUN apk update && apk upgrade
-RUN apk add openssl nginx supervisor \
-	php7 php7-mysqli php7-zlib php7-curl php7-mbstring \
-	php7-json php7-session php7-fpm libc6-compat
+# RUN apk add openssl nginx supervisor \
+# 	php7 php7-mysqli php7-zlib php7-curl php7-mbstring \
+# 	php7-json php7-session php7-fpm libc6-compat
+RUN apk add nginx php-fpm supervisor \
+	php7-common php7-session php7-iconv php7-json php7-gd php7-curl php7-xml php7-mysqli php7-imap php7-cgi fcgi php7-pdo php7-pdo_mysql php7-soap php7-xmlrpc php7-posix php7-mcrypt php7-gettext php7-ldap php7-ctype php7-dom
+
 
 #config for supervisor
 COPY /srcs/supervisord.conf /etc/supervisord.conf
 
-RUN /usr/bin/mysql_install_db --user=root
-/etc/init.d/mysql start && rc-update add mysql default
-/usr/bin/mysqladmin -u root password 'password'
+# RUN /usr/bin/mysql_install_db --user=root
+# /etc/init.d/mysql start && rc-update add mysql default
+# /usr/bin/mysqladmin -u root password 'password'
 
 #create folder for nginx
 RUN mkdir -p /run/nginx
-
-#config for nginx
-# COPY srcs/nginx.conf /etc/nginx/conf.d/default.conf
 COPY /srcs/nginx.conf /etc/nginx/conf.d/default.conf
 
 #create folder for wordpress
 RUN mkdir -p /www
 
-ADD https://files.phpmyadmin.net/phpMyAdmin/5.1.0/phpMyAdmin-5.1.0-all-languages.zip .
 ADD https://files.phpmyadmin.net/phpMyAdmin/5.1.0/phpMyAdmin-5.1.0-all-languages.tar.gz .
-RUN tar xvzf phpMyAdmin-5.1.0-all-languages.tar.gz -C /www && rm -rf phpMyAdmin-5.1.0-all-languages.tar.gz
+RUN tar xvzf phpMyAdmin-5.1.0-all-languages.tar.gz && rm -rf phpMyAdmin-5.1.0-all-languages.tar.gz
+RUN mv phpMyAdmin-5.1.0-all-languages /www/phpmyadmin
 
 
 #download and setup wordpress
-ADD https://wordpress.org/latest.tar.gz .
-RUN tar -xvzf latest.tar.gz -C /www && rm -rf latest.tar.gz
-RUN mv phpMyAdmin-5.1.0-all-languages /www/phpmyadmin
-# COPY ./srcs/wp-config.php /ww§w/wordpress/wp-config.php
-COPY ./srcs/wp-config.php /www/wordpress/wp-config.php
-COPY ./srcs/config.inc.php /www/phpmyadmin/config.inc.php
+# ADD https://wordpress.org/latest.tar.gz .
+# RUN tar -xvzf latest.tar.gz -C /www && rm -rf latest.tar.gz
+# RUN mv phpMyAdmin-5.1.0-all-languages /www/phpmyadmin
+# # COPY ./srcs/config.inc.php /ww§w/wordpress/wp-config.php
+# COPY ./srcs/config.inc.php /www/wordpress/wp-config.php
+COPY ./srcs/config.inc.php  /www/phpmyadmin/config.inc.php
 
 
 #download and setup telegraf
