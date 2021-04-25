@@ -4,9 +4,7 @@ FROM alpine:3.12
 RUN apk update && apk upgrade
 
 #download utils and packages
-RUN apk add openssl unzip nginx supervisor \
-	php7 php7-mysqli php7-zlib php7-curl php7-mbstring \
-	php7-json php7-session php7-fpm libc6-compat
+RUN apk add openssl unzip nginx supervisor
 RUN apk add php7 php7-fpm php7-common php7-iconv php7-json php7-gd php7-curl \
     php7-xml php7-mysqli php7-imap php7-cgi fcgi php7-pdo php7-pdo_mysql \
     php7-soap php7-xmlrpc php7-posix php7-mcrypt php7-gettext php7-ldap \

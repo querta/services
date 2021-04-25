@@ -10,6 +10,7 @@ RUN apk add mariadb mariadb-client supervisor openrc
 # RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/community --allow-untrusted --no-cache
 RUN mkdir -p /run/mysql
 COPY srcs/default.sql ./default.sql
+COPY srcs/wordpress.sql ./wordpress.sql
 # COPY srcs/wordpress.sql ./wordpress.sql
 
 
@@ -21,3 +22,8 @@ COPY /srcs/start.sh /
 
 EXPOSE 3306
 ENTRYPOINT sh start.sh
+# RUN sh start.sh && rm -rf start.sh default.sql
+# CMD ["supervisord"]
+
+# mysqldump -u mmonte -ppassword -h mysql-svc wordpress > wp.sql
+# mysqldump --opt -h mysql-svc -u mmonte -ppassword wordpress| gzip > wp.sql
