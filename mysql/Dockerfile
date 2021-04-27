@@ -22,8 +22,3 @@ COPY /srcs/start.sh /
 
 EXPOSE 3306
 ENTRYPOINT sh start.sh
-# RUN sh start.sh && rm -rf start.sh default.sql
-# CMD ["supervisord"]
-
-# mysqldump -u mmonte -ppassword -h mysql-svc wordpress > wp.sql
-# mysqldump --opt -h mysql-svc -u mmonte -ppassword wordpress| gzip > wp.sql

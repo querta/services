@@ -1,3 +1,6 @@
 #! /bin/sh
 
-php-fpm7 && nginx -g 'daemon off;'
+adduser -D mmonte
+echo mmonte:12345 | chpasswd
+
+usr/bin/supervisord -c /etc/supervisord.conf

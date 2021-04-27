@@ -37,21 +37,8 @@ ADD https://files.phpmyadmin.net/phpMyAdmin/5.1.0/phpMyAdmin-5.1.0-all-languages
 RUN tar xvzf phpMyAdmin-5.1.0-all-languages.tar.gz && rm -rf phpMyAdmin-5.1.0-all-languages.tar.gz
 RUN mv phpMyAdmin-5.1.0-all-languages /www/phpmyadmin && mkdir /www/phpmyadmin/tmp/ && chmod 777 /www/phpmyadmin/tmp/
 
-#download and setup wordpress
-# ADD https://wordpress.org/latest.tar.gz .
-# RUN tar -xvzf latest.tar.gz -C /www && rm -rf latest.tar.gz
-# RUN mv phpMyAdmin-5.1.0-all-languages /www/phpmyadmin
-# # COPY ./srcs/config.inc.php /ww§w/wordpress/wp-config.php
-# COPY ./srcs/config.inc.php /www/wordpress/wp-config.php
 COPY ./srcs/config.inc.php  /www/phpmyadmin/config.inc.php
 
-
-#download and setup telegraf
-# ADD https://dl.influxdata.com/telegraf/releases/telegraf-1.17.0_linux_amd64.tar.gz .
-# RUN tar -xvzf telegraf-1.17.0_linux_amd64.tar.gz \
-# 	&& mv telegraf-1.17.0 telegraf \
-# 	&& rm -rf telegraf-1.17.0_linux_amd64.tar.gz
-# COPY srcs/telegraf.conf etc/telegraf/telegraf.conf
 
 
 EXPOSE 5000
