@@ -19,3 +19,6 @@ kubectl apply -f ./wordpress/setup.yaml
 
 docker build -t pma_image ./pma/
 kubectl apply -f ./pma/setup.yaml
+
+docker build -t ftps_image ./pma/
+kubectl apply -f ./ftps/setup.yaml

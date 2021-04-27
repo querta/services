@@ -13,7 +13,7 @@ spec:
       port: 20
       targetPort: 20
     - protocol: TCP
-      name: ftp20
+      name: ftp21
       port: 21
       targetPort: 21
     - protocol: TCP
@@ -21,7 +21,7 @@ spec:
       port: 3020
       targetPort: 3020
     - protocol: TCP
-      name: ftp21
+      name: ftp3021
       port: 3021
       targetPort: 3021
   type: LoadBalancer
