@@ -1,5 +1,6 @@
 #!/bin/bash
 
+eval $(minikube docker-env)
 if [ -n "$1" ]
 then
         kubectl delete svc $1-svc
@@ -15,6 +16,8 @@ else
         kubectl delete deploy wordpress-deploy
         kubectl delete svc pma-svc
         kubectl delete deploy pma-deploy
+        kubectl delete svc ftps-svc
+        kubectl delete deploy ftps-deploy
 
         docker build -t nginx_image ./nginx/
         kubectl apply -f ./nginx/setup.yaml
@@ -24,6 +27,8 @@ else
         kubectl apply -f ./wordpress/setup.yaml
         docker build -t pma_image ./pma/
         kubectl apply -f ./pma/setup.yaml
+        docker build -t ftpsimage ./ftps/
+        kubectl apply -f ./ftps/setup.yaml
 fi
 
 # if [ $# -eq 0 ]

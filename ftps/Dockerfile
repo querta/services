@@ -15,6 +15,7 @@ COPY /srcs/supervisord.conf /etc/supervisord.conf
 
 EXPOSE 20 21 3020 3021
 
+# CMD ["supervisord"]
 COPY /srcs/start.sh /
 
 ENTRYPOINT sh start.sh

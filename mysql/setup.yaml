@@ -48,7 +48,6 @@ metadata:
   labels:
     app: mysql
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: mysql

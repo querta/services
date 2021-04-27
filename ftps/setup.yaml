@@ -34,7 +34,6 @@ spec:
   selector:
     matchLabels:
       app: ftps
-  replicas: 1
   template:
     metadata:
       labels:
