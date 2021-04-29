@@ -22,3 +22,8 @@ kubectl apply -f ./pma/setup.yaml
 
 docker build -t ftps_image ./ftps/
 kubectl apply -f ./ftps/setup.yaml
+
+docker build -t influxdb_image ./influxdb/
+kubectl apply -f ./influxdb/setup.yaml
+
+# docker rmi mysql_image && docker rmi pma_image && docker rmi nginx_image && docker rmi ftpsimage 
