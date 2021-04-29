@@ -30,7 +30,7 @@ kind: Service
 metadata:
   name: grafana
   annotations:
-    metallb.universe.tf/allow-shared-ip: metal_spitt
+    metallb.universe.tf/allow-shared-ip: metal-ip
 spec:
   selector:
     app: grafana

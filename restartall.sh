@@ -20,8 +20,8 @@ else
         kubectl delete deploy ftps-deploy
         kubectl delete svc influxdb-svc
         kubectl delete deploy influxdb-deploy
-        kubectl delete svc grafana-svc
-        kubectl delete deploy grafana-deploy
+        # kubectl delete svc grafana-svc
+        # kubectl delete deploy grafana-deploy
 
         docker build -t nginx_image ./nginx/
         kubectl apply -f ./nginx/setup.yaml
@@ -35,8 +35,8 @@ else
         kubectl apply -f ./ftps/setup.yaml
         docker build -t influxdb_image ./influxdb/
         kubectl apply -f ./influxdb/setup.yaml
-        docker build -t grafana_image ./grafana/
-        kubectl apply -f ./grafana/setup.yaml
+        # docker build -t grafana_image ./grafana/
+        # kubectl apply -f ./grafana/setup.yaml
 fi
 
 # if [ $# -eq 0 ]
