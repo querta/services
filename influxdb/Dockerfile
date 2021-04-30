@@ -16,7 +16,7 @@ RUN mkdir -p /usr/src /etc/telegraf && \
 
 COPY /srcs/telegraf.conf /etc/telegraf/telegraf.conf
 COPY /srcs/supervisord.conf /etc/supervisord.conf
-COPY /srcs/start.sh /
+# COPY /srcs/start.sh /
 
 EXPOSE 8086
 

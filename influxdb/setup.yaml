@@ -36,7 +36,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50Mi
+      storage: 100Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -58,7 +58,7 @@ spec:
         ports:
         - containerPort: 8086
         volumeMounts:
-          - mountPath: "/var/lib/influxdb"
+          - mountPath: "/root/.influxdb"
             name: influxdb
           - mountPath: "/var/run/docker.sock"
             name: dockersock
