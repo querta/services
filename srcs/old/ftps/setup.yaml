@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ftps-svc
+  annotations:
+    metallb.universe.tf/allow-shared-ip: metal-ip
+spec:
+  selector:
+    app: ftps
+  ports:
+    - protocol: TCP
+      name: ftp20
+      port: 20
+      targetPort: 20
+    - protocol: TCP
+      name: ftp21
+      port: 21
+      targetPort: 21
+    - protocol: TCP
+      name: ftp3020
+      port: 3020
+      targetPort: 3020
+    - protocol: TCP
+      name: ftp3021
+      port: 3021
+      targetPort: 3021
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftps-deploy
+spec:
+  selector:
+    matchLabels:
+      app: ftps
+  template:
+    metadata:
+      labels:
+        app: ftps
+    spec:
+      containers:
+      - name: ftps
+        image: ftps_image
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 20
+        - containerPort: 21
+        - containerPort: 3020
+        - containerPort: 3021
