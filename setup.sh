@@ -3,7 +3,7 @@
 export MINIKUBE_HOME=/goinfre/$USER/  
 minikube start --vm-driver=virtualbox --cpus 2 --memory 3000
 eval $(minikube docker-env)
-docker pull metallb/speaker:v0.8.2; docker pull metallb/controller:v0.8.2
+# docker pull metallb/speaker:v0.8.2; docker pull metallb/controller:v0.8.2
 
 minikube addons enable metallb && kubectl apply -f ./srcs/metalconfig.yaml 
 minikube addons enable dashboard
@@ -15,7 +15,3 @@ docker build -t mysql_image ./srcs/mysql ; kubectl apply -f ./srcs/mysql/setup.y
 docker build -t pma_image ./srcs/pma ; kubectl apply -f ./srcs/pma/setup.yaml
 docker build -t wordpress_image ./srcs/wordpress ; kubectl apply -f ./srcs/wordpress/setup.yaml
 docker build -t grafana_image ./srcs/grafana ; kubectl apply -f ./srcs/grafana/setup.yaml
-
-
-
-# kubectl exec deploy/nginx-deploy -- pkill nginx
