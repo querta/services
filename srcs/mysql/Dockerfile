@@ -11,7 +11,7 @@ COPY /srcs/my.cnf /etc/my.cnf.d/my.cnf
 
 COPY /srcs/supervisord.conf /etc/supervisord.conf
 COPY /srcs/start.sh /
-RUN chmod 777 /start.sh
+RUN chmod +x /start.sh
 
 EXPOSE 3306
-CMD ["/start.sh"]
+ENTRYPOINT ["./start.sh"]

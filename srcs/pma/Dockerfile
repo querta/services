@@ -10,7 +10,6 @@ RUN apk add php7 php7-fpm php7-opcache \
     php7-posix php7-mcrypt php7-gettext \
     php7-ldap php7-ctype php7-dom
 
-
 COPY /srcs/supervisord.conf /etc/supervisord.conf
 
 RUN mkdir -p /run/nginx www
@@ -23,8 +22,4 @@ RUN mv phpMyAdmin-5.1.0-all-languages /www/phpmyadmin && mkdir /www/phpmyadmin/t
 COPY ./srcs/config.inc.php  /www/phpmyadmin/config.inc.php
 
 EXPOSE 5000
-
-COPY ./srcs/start.sh ./
-RUN chmod 777 ./start.sh
-CMD ["/start.sh"]
-# CMD ["supervisord"]
+ENTRYPOINT ["supervisord"]

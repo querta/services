@@ -18,11 +18,4 @@ COPY /srcs/telegraf.conf /etc/telegraf/telegraf.conf
 COPY /srcs/supervisord.conf /etc/supervisord.conf
 
 EXPOSE 8086
-
-# CMD ["supervisord"]
-COPY ./srcs/start.sh ./
-RUN chmod 777 ./start.sh
-CMD ["/start.sh"]
-# CMD ["./start.sh"]
-# ENTRYPOINT sh
-# ENTRYPOINT sh start.sh
+ENTRYPOINT ["supervisord"]

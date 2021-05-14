@@ -2,9 +2,6 @@ FROM alpine:3.12
 RUN apk update && apk upgrade
 RUN apk add nginx openssl openssh supervisor
 
-# RUN adduser -D mmonte
-# RUN echo "mmonte:12345" | chpasswd
-
 RUN mkdir /etc/nginx/ssl
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/nginx/ssl/private.key -out /etc/nginx/ssl/sertificate.crt -subj "/C=RU/ST=Moscow/L=Moscow/O=21 school/OU=Mmonte/CN=othercrt"
 
@@ -15,8 +12,4 @@ COPY /srcs/supervisord.conf /etc/supervisord.conf
 RUN mkdir -p /run/nginx
 
 EXPOSE 80 443 22
-
-COPY ./srcs/start.sh ./
-RUN chmod 777 ./start.sh
-CMD ["/start.sh"]
-# CMD ["supervisord"]
+ENTRYPOINT ["supervisord"]
