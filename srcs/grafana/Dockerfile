@@ -10,7 +10,6 @@ RUN tar -zxvf grafana-7.5.4.linux-amd64.tar.gz && rm grafana-7.5.4.linux-amd64.t
 COPY ./srcs/sample.yaml /grafana-7.5.4/conf/provisioning/dashboards/sample.yaml
 COPY ./srcs/datasource.yaml ./grafana-7.5.4/conf/provisioning/datasources/datasource.yaml
 COPY ./srcs/grafana.ini ./grafana-7.5.4/conf/grafana.ini
-COPY ./srcs/supervisord.conf ./etc/
 
 EXPOSE 3000
 ENTRYPOINT ["grafana-server", "--homepath", "/grafana-7.5.4", "--config", "/grafana-7.5.4/conf/grafana.ini"]
