@@ -17,13 +17,13 @@ spec:
       port: 21
       targetPort: 21
     - protocol: TCP
-      name: ftp3020
-      port: 3020
-      targetPort: 3020
+      name: ftp30020
+      port: 30020
+      targetPort: 30020
     - protocol: TCP
-      name: ftp3021
-      port: 3021
-      targetPort: 3021
+      name: ftp30021
+      port: 30021
+      targetPort: 30021
   type: LoadBalancer
 ---
 apiVersion: apps/v1
@@ -34,6 +34,7 @@ spec:
   selector:
     matchLabels:
       app: ftps
+  replicas: 1
   template:
     metadata:
       labels:
@@ -46,5 +47,5 @@ spec:
         ports:
         - containerPort: 20
         - containerPort: 21
-        - containerPort: 3020
-        - containerPort: 3021
+        - containerPort: 30020
+        - containerPort: 30021
